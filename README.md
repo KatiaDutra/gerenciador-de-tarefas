@@ -28,4 +28,4 @@ gerenciador_de_tarefa/
 └── js/
     └── script.js
 
-# Autora: Katia Dutra
+Autora: Katia Dutra
