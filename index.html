@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="app">
+
+        <aside class="sidebar">
+            <div class="sidebar__brand">
+                <span class="sidebar__mark">✓</span>
+                <span class="sidebar__name">Tarefeiro</span>
+            </div>
+
+            <button id="btn-nova-tarefa" class="botao botao--principal">+ Nova Tarefa</button>
+
+            <fieldset class="sidebar__filtro">
+                <legend>Situação</legend>
+                <button class="filtro-situacao filtro-situacao--ativo" data-filtro="todas">Todas</button>
+                <button class="filtro-situacao" data-filtro="pendente">Pendentes</button>
+                <button class="filtro-situacao" data-filtro="concluida">Concluídas</button>
+            </fieldset>
+
+            <div class="sidebar__categorias">
+                <h3>Categorias</h3>
+                <ul id="lista-categorias"></ul>
+                <form id="form-categoria">
+                    <input type="text" id="nova-categoria" placeholder="Nova categoria">
+                    <button type="submit">+</button>
+                </form>
+            </div>
+        </aside>
+
+        <main class="conteudo">
+            <h1>Gerenciador de Tarefas</h1>
+            <section class="indicadores">
+                <div class="indicador">Total: <span id="total-tarefas">0</span></div>
+                <div class="indicador">Pendentes: <span id="pendentes-tarefas">0</span></div>
+                <div class="indicador">Concluídas: <span id="concluidas-tarefas">0</span></div>
+            </section>
+            <section id="lista-tarefas" class="grid-tarefas"></section>
+                <p id="estado-vazio">Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!</p>
+            
+        </main>
+    </div>
+
+    <div id="modal-tarefa" class="modal" hidden>
+        <div class="modal__conteudo">
+            <h2>Nova Tarefa</h2>
+
+            <form id="form-tarefa">
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" required>
+                <label for="categoria">Categoria</label>
+                <select id="categoria" required>
+                    <option value="">Selecione</option>
+                </select>
+
+                <label for="prioridade">Prioridade</label>
+                <select id="prioridade" required>
+                    <option value="">Selecione</option>
+                    <option value="baixa">Baixa</option>
+                    <option value="media">Média</option>
+                    <option value="alta">Alta</option>
+                </select>
+
+                <label for="prazo">Data de conclusão</label>
+                <input type="date" id="prazo" required>
+
+                <button type="submit">Adicionar tarefa</button>
+                <button type="button" id="btn-fechar-modal">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
