@@ -1,0 +1,264 @@
+:root {
+  --cor-fundo: #F4F5F7;
+  --cor-card: #FFFFFF;
+  --cor-texto: #1F2937;
+  --cor-texto-suave: #6B7280;
+
+  --cor-pendente: #F59E0B;
+  --cor-concluida: #16A34A;
+
+  --cor-editar: #2563EB;
+  --cor-excluir: #DC2626;
+  --cor-concluir: #16A34A;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--cor-card);
+  border-right: 1px solid #E5E7EB;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.conteudo {
+  padding: 32px 40px;
+}
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--cor-editar);
+}
+
+.sidebar__mark {
+  background: var(--cor-editar);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.botao--principal {
+  background: var(--cor-editar);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botao--principal:hover {
+  opacity: 0.9;
+}
+
+.sidebar__filtro {
+  border: none;
+  padding: 0;
+}
+
+.sidebar__filtro legend {
+  font-weight: bold;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.sidebar__filtro {
+  display: flex;
+  flex-direction: column;
+}
+
+.filtro-situacao {
+  background: none;
+  border: 1px solid #E5E7EB;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--cor-texto-suave);
+}
+
+.filtro-situacao {
+  border-radius: 6px;
+}
+
+.filtro-situacao--ativo {
+  background: var(--cor-editar);
+  color: white;
+  border-color: var(--cor-editar);
+}
+
+.sidebar__categorias h3 {
+  margin-bottom: 8px;
+}
+
+#lista-categorias {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#lista-categorias li {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+}
+
+#lista-categorias li:hover {
+  background: var(--cor-fundo);
+}
+
+#form-categoria {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+#form-categoria input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+}
+
+#form-categoria button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--cor-fundo);
+  cursor: pointer;
+}
+
+.indicadores {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.indicador {
+  background: var(--cor-card);
+  padding: 16px 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  font-weight: 600;
+}
+
+#pendentes-tarefas {
+  color: var(--cor-pendente);
+}
+
+#concluidas-tarefas {
+  color: var(--cor-concluida);
+}
+
+h1 {
+  margin-bottom: 4px;
+}
+
+.grid-tarefas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+#estado-vazio {
+  color: var(--cor-texto-suave);
+  margin-top: 16px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__conteudo {
+  background: var(--cor-card);
+  padding: 28px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.modal__conteudo h2 {
+  margin-bottom: 16px;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+#form-tarefa {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#form-tarefa label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+#form-tarefa input, #form-tarefa select {
+  padding: 10px 12px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+#form-tarefa button {
+  margin-top: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#form-tarefa button[type="submit"] {
+  background: var(--cor-editar);
+  color: white;
+}
+
+#form-tarefa button[type="button"] {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+
+
+
