@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
 </head>
 
 <body>
@@ -26,7 +27,16 @@
                 <button class="filtro-situacao" data-filtro="concluida">Concluídas</button>
             </fieldset>
 
-            <div class="sidebar__categorias">
+            <div class="sidebar__ordenacao">
+                <label for="select-ordenacao">Ordenar por</label>
+                <select id="select-ordenacao">
+                    <option value="criacao">Mais recentes</option>
+                    <option value="prioridade">Prioridade</option>
+                    <option value="prazo">Prazo</option>
+                </select>
+            </div>
+
+                        <div class="sidebar__categorias">
                 <h3>Categorias</h3>
                 <ul id="lista-categorias"></ul>
                 <form id="form-categoria">
@@ -34,6 +44,8 @@
                     <button type="submit">+</button>
                 </form>
             </div>
+
+            <button type="button" id="btn-excluir-concluidas" class="botao--fantasma">Excluir concluídas</button>
         </aside>
 
         <main class="conteudo">
@@ -42,10 +54,12 @@
                 <div class="indicador">Total: <span id="total-tarefas">0</span></div>
                 <div class="indicador">Pendentes: <span id="pendentes-tarefas">0</span></div>
                 <div class="indicador">Concluídas: <span id="concluidas-tarefas">0</span></div>
+                <div class="indicador">Concluído: <span id="percentual-tarefas">0%</span></div>
+                <div class="indicador indicador--atraso">Atrasadas: <span id="atrasadas-tarefas">0</span></div>
             </section>
             <section id="lista-tarefas" class="grid-tarefas"></section>
-                <p id="estado-vazio">Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!</p>
-            
+            <p id="estado-vazio">Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!</p>
+
         </main>
     </div>
 
@@ -53,13 +67,16 @@
         <div class="modal__conteudo">
             <h2>Nova Tarefa</h2>
 
-            <form id="form-tarefa">
+            <form id="form-tarefa" novalidate>
                 <label for="descricao">Descrição</label>
                 <input type="text" id="descricao" required>
+                <span class="erro" id="erro-descricao"></span>
+
                 <label for="categoria">Categoria</label>
                 <select id="categoria" required>
                     <option value="">Selecione</option>
                 </select>
+                <span class="erro" id="erro-categoria"></span>
 
                 <label for="prioridade">Prioridade</label>
                 <select id="prioridade" required>
@@ -68,17 +85,17 @@
                     <option value="media">Média</option>
                     <option value="alta">Alta</option>
                 </select>
+                <span class="erro" id="erro-prioridade"></span>
 
                 <label for="prazo">Data de conclusão</label>
                 <input type="date" id="prazo" required>
+                <span class="erro" id="erro-prazo"></span>
 
-                <button type="submit">Adicionar tarefa</button>
+                <button type="submit" id="btn-salvar-tarefa">Adicionar tarefa</button>
                 <button type="button" id="btn-fechar-modal">Cancelar</button>
             </form>
         </div>
     </div>
-
-    <script src="js/script.js"></script>
 </body>
 
 </html>

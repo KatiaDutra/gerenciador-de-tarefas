@@ -165,6 +165,7 @@ body {
   background: var(--cor-card);
   padding: 16px 20px;
   border-radius: 10px;
+  border: 1px solid #D1D5DB;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   font-weight: 600;
 }
@@ -258,6 +259,112 @@ h1 {
   background: var(--cor-fundo);
   color: var(--cor-texto);
 }
+
+#lista-categorias li.categoria-ativa {
+  background: var(--cor-editar);
+  color: white;
+  font-weight: 600;
+}
+
+.tarefa {
+  background: var(--cor-card);
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px solid #D1D5DB;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tarefa__descricao {
+  font-size: 1.05rem;
+}
+
+.tarefa__categoria, .tarefa__prioridade, .tarefa__prazo {
+  font-size: 0.88rem;
+  color: var(--cor-texto-suave);
+}
+
+.tarefa__acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tarefa__acoes button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao--editar {
+  background: #DBEAFE;
+  color: var(--cor-editar);
+}
+
+.botao--excluir {
+  background: #FEE2E2;
+  color: var(--cor-excluir);
+}
+
+.botao--concluir {
+  background: #DCFCE7;
+  color: var(--cor-concluir);
+}
+
+.tarefa--concluida {
+  opacity: 0.6;
+}
+
+.tarefa--concluida .tarefa__descricao {
+  text-decoration: line-through;
+}
+
+.erro {
+  display: block;
+  color: var(--cor-excluir);
+  font-size: 0.8rem;
+  margin-top: 2px;
+  min-height: 14px;
+}
+
+#atrasadas-tarefas {
+  color: var(--cor-excluir);
+}
+
+.botao--fantasma {
+  background: none;
+  border: 1px solid var(--cor-excluir);
+  color: var(--cor-excluir);
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.sidebar__ordenacao {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar__ordenacao label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sidebar__ordenacao select {
+  padding: 8px 10px;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+}
+
 
 
 
