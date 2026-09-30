@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Tarefas</title>
+    <title>FocoCerto</title>
+    <link rel="icon" href="FocoCerto.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
 </head>
 
 <body>
-    <div class="app">
+<div class="app">
 
-        <aside class="sidebar">
+    <aside class="sidebar">
             <div class="sidebar__brand">
-                <span class="sidebar__mark">✓</span>
-                <span class="sidebar__name">Minhas Tarefas</span>
+                <img src="FocoCerto.png" alt="FocoCerto" class="sidebar__logo">
             </div>
 
             <button id="btn-nova-tarefa" class="botao botao--principal">+ Nova Tarefa</button>
@@ -46,7 +46,7 @@
             </div>
 
             <button type="button" id="btn-excluir-concluidas" class="botao--fantasma">Excluir concluídas</button>
-        </aside>
+    </aside>
 
         <main class="conteudo">
             <h1>Gerenciador de Tarefas</h1>
@@ -54,14 +54,13 @@
                 <div class="indicador">Total: <span id="total-tarefas">0</span></div>
                 <div class="indicador">Pendentes: <span id="pendentes-tarefas">0</span></div>
                 <div class="indicador">Concluídas: <span id="concluidas-tarefas">0</span></div>
-                <div class="indicador">Concluído: <span id="percentual-tarefas">0%</span></div>
                 <div class="indicador indicador--atraso">Atrasadas: <span id="atrasadas-tarefas">0</span></div>
+                <div class="indicador">Tarefas Concluídas: <span id="percentual-tarefas">0%</span></div>
             </section>
             <section id="lista-tarefas" class="grid-tarefas"></section>
             <p id="estado-vazio">Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!</p>
 
         </main>
-    </div>
 
     <div id="modal-tarefa" class="modal" hidden>
         <div class="modal__conteudo">

@@ -10,6 +10,7 @@
   --cor-editar: #2563EB;
   --cor-excluir: #DC2626;
   --cor-concluir: #16A34A;
+  --cor-atrasada-fundo: #f6f3eb;
 }
 
 * {
@@ -45,22 +46,12 @@ body {
 
 .sidebar__brand {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--cor-editar);
+  justify-content: center;
 }
 
-.sidebar__mark {
-  background: var(--cor-editar);
-  color: white;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.sidebar__logo {
+  width: 120px;
+  height: auto;
 }
 
 .botao--principal {
@@ -162,7 +153,7 @@ body {
 }
 
 .indicador {
-  background: var(--cor-card);
+  background: var(--cor-atrasada-fundo);
   padding: 16px 20px;
   border-radius: 10px;
   border: 1px solid #D1D5DB;
@@ -267,10 +258,10 @@ h1 {
 }
 
 .tarefa {
-  background: var(--cor-card);
+  background: var(--cor-atrasada-fundo);
   padding: 16px 18px;
   border-radius: 10px;
-  border: 1px solid #D1D5DB;
+  border: 2px solid #D1D5DB;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
@@ -321,6 +312,15 @@ h1 {
   opacity: 0.6;
 }
 
+.tarefa--atrasada {
+  border: 3px solid #e09090;
+  color: #B91C1C;
+}
+
+.tarefa--atrasada .tarefa__prazo {
+  color: #B91C1C;
+}
+
 .tarefa--concluida .tarefa__descricao {
   text-decoration: line-through;
 }
@@ -364,8 +364,3 @@ h1 {
   border: 1px solid #E5E7EB;
   border-radius: 6px;
 }
-
-
-
-
-

@@ -74,6 +74,11 @@ function exibirCategorias() {
   listaCategorias.innerHTML = "";
   campoCategoria.innerHTML = '<option value="">Selecione</option>';
 
+  const itemTodas = document.createElement("li");
+  itemTodas.textContent = "Todas";
+  itemTodas.dataset.categoria = "";
+  listaCategorias.appendChild(itemTodas);
+
   categorias.forEach((categoria) => {
     const item = document.createElement("li");
     item.textContent = categoria;
@@ -84,6 +89,15 @@ function exibirCategorias() {
     opcao.value = categoria;
     opcao.textContent = categoria;
     campoCategoria.appendChild(opcao);
+  });
+
+  destacarCategoriaAtiva();
+}
+
+function destacarCategoriaAtiva() {
+  document.querySelectorAll("#lista-categorias li").forEach((li) => {
+    const categoriaDoItem = li.dataset.categoria || null;
+    li.classList.toggle("categoria-ativa", categoriaDoItem === filtroCategoriaAtual);
   });
 }
 
@@ -109,6 +123,10 @@ function exibirTarefas() {
     card.className = "tarefa";
     if (tarefa.situacao === "concluida") {
       card.classList.add("tarefa--concluida");
+    }
+
+    if (estaAtrasada(tarefa)) {
+      card.classList.add("tarefa--atrasada");
     }
 
     card.innerHTML = `
@@ -303,19 +321,15 @@ listaCategorias.addEventListener("click", (evento) => {
   const item = evento.target.closest("li");
   if (!item) return;
 
-  const categoriaClicada = item.dataset.categoria;
+  const categoriaClicada = item.dataset.categoria || null;
 
   if (filtroCategoriaAtual === categoriaClicada) {
     filtroCategoriaAtual = null;
-    item.classList.remove("categoria-ativa");
   } else {
-    document.querySelectorAll("#lista-categorias li").forEach((li) => {
-      li.classList.remove("categoria-ativa");
-    });
     filtroCategoriaAtual = categoriaClicada;
-    item.classList.add("categoria-ativa");
   }
 
+  destacarCategoriaAtiva();
   exibirTarefas();
 });
 
