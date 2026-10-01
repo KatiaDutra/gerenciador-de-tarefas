@@ -1,3 +1,7 @@
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
 const modal = document.getElementById("modal-tarefa");
 const btnNovaTarefa = document.getElementById("btn-nova-tarefa");
 const btnFecharModal = document.getElementById("btn-fechar-modal");
@@ -27,30 +31,53 @@ let idEmEdicao = null;
 let ordenacaoAtual = "criacao";
 
 let tarefas = [];
-let categorias = ["Trabalho", "Estudos", "Pessoal", "Saúde", "Casa"];
+let categorias = [];
 let filtroSituacaoAtual = "todas";
 let filtroCategoriaAtual = null;
 
-function salvarTarefas() {
-  localStorage.setItem("tarefas", JSON.stringify(tarefas));
+const CATEGORIAS_PADRAO = ["Trabalho", "Estudos", "Pessoal", "Saúde", "Casa"];
+let usuarioId = null;
+
+async function salvarDados() {
+  if (!usuarioId) return;
+  try {
+    await setDoc(doc(db, "usuarios", usuarioId), { tarefas, categorias });
+  } catch (erro) {
+    console.error("Erro ao salvar no Firestore:", erro);
+    alert("Não foi possível salvar suas alterações. Verifique sua conexão e tente novamente.");
+  }
 }
 
-function carregarTarefas() {
-  const textoSalvo = localStorage.getItem("tarefas");
-  if (textoSalvo) {
-    tarefas = JSON.parse(textoSalvo);
-  }
+function salvarTarefas() {
+  salvarDados();
 }
 
 function salvarCategorias() {
-  localStorage.setItem("categorias", JSON.stringify(categorias));
+  salvarDados();
 }
 
-function carregarCategorias() {
-  const textoSalvo = localStorage.getItem("categorias");
-  if (textoSalvo) {
-    categorias = JSON.parse(textoSalvo);
+async function carregarDados() {
+  const documento = await getDoc(doc(db, "usuarios", usuarioId));
+  if (documento.exists()) {
+    const dados = documento.data();
+    tarefas = dados.tarefas || [];
+    categorias = dados.categorias || [...CATEGORIAS_PADRAO];
+  } else {
+    tarefas = [];
+    categorias = [...CATEGORIAS_PADRAO];
   }
+}
+
+function limparTela() {
+  tarefas = [];
+  categorias = [...CATEGORIAS_PADRAO];
+  filtroCategoriaAtual = null;
+  idEmEdicao = null;
+  modal.hidden = true;
+  formTarefa.reset();
+  exibirCategorias();
+  exibirTarefas();
+  atualizarIndicadores();
 }
 
 function pesoPrioridade(prioridade) {
@@ -355,8 +382,28 @@ selectOrdenacao.addEventListener("change", () => {
   exibirTarefas();
 });
 
-carregarTarefas();
-carregarCategorias();
-exibirCategorias();
-exibirTarefas();
-atualizarIndicadores();
+onAuthStateChanged(auth, async (usuario) => {
+  if (!usuario) {
+    usuarioId = null;
+    limparTela();
+    return;
+  }
+
+  usuarioId = usuario.uid;
+  listaTarefas.innerHTML = "";
+  estadoVazio.textContent = "Carregando suas tarefas...";
+  estadoVazio.hidden = false;
+
+  try {
+    await carregarDados();
+  } catch (erro) {
+    console.error("Erro ao carregar do Firestore:", erro);
+    estadoVazio.textContent = "Não foi possível carregar suas tarefas. Recarregue a página.";
+    return;
+  }
+
+  estadoVazio.textContent = "Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!";
+  exibirCategorias();
+  exibirTarefas();
+  atualizarIndicadores();
+});
