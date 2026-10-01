@@ -7,46 +7,78 @@
     <title>FocoCerto</title>
     <link rel="icon" href="FocoCerto.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
     <script src="js/script.js" defer></script>
+    <script type="module" src="js/auth.js"></script>    
 </head>
 
 <body>
-<div class="app">
+    <section id="tela-login" class="tela-login" hidden>
+        <div class="login__caixa">
+            <img src="FocoCerto.png" alt="FocoCerto" class="login__logo">
+            <h1 id="login-titulo">Entrar</h1>
 
-    <aside class="sidebar">
-            <div class="sidebar__brand">
-                <img src="FocoCerto.png" alt="FocoCerto" class="sidebar__logo">
+            <form id="form-login" novalidate>
+                <label for="login-email">E-mail</label>
+                <input type="email" id="login-email" autocomplete="email" required>
+
+                <label for="login-senha">Senha</label>
+                <input type="password" id="login-senha" autocomplete="current-password" required>
+
+                <p id="mensagem-login" class="login__mensagem" aria-live="polite"></p>
+
+                <button type="submit" id="btn-login">Entrar</button>
+            </form>
+
+            <div class="login__rodape">
+                <button type="button" id="btn-esqueci" class="login__link">Esqueci minha senha</button>
+                <p><span id="texto-alternar">Ainda não tem conta?</span>
+                    <button type="button" id="btn-alternar" class="login__link">Criar conta</button></p>
             </div>
+        </div>
+    </section>
 
-            <button id="btn-nova-tarefa" class="botao botao--principal">+ Nova Tarefa</button>
+    <div class="app" hidden>
 
-            <fieldset class="sidebar__filtro">
-                <legend>Situação</legend>
-                <button class="filtro-situacao filtro-situacao--ativo" data-filtro="todas">Todas</button>
-                <button class="filtro-situacao" data-filtro="pendente">Pendentes</button>
-                <button class="filtro-situacao" data-filtro="concluida">Concluídas</button>
-            </fieldset>
+        <aside class="sidebar">
+                <div class="sidebar__brand">
+                    <img src="FocoCerto.png" alt="FocoCerto" class="sidebar__logo">
+                </div>
 
-            <div class="sidebar__ordenacao">
-                <label for="select-ordenacao">Ordenar por</label>
-                <select id="select-ordenacao">
-                    <option value="criacao">Mais recentes</option>
-                    <option value="prioridade">Prioridade</option>
-                    <option value="prazo">Prazo</option>
-                </select>
-            </div>
+                <button id="btn-nova-tarefa" class="botao botao--principal">+ Nova Tarefa</button>
 
-                        <div class="sidebar__categorias">
-                <h3>Categorias</h3>
-                <ul id="lista-categorias"></ul>
-                <form id="form-categoria">
-                    <input type="text" id="nova-categoria" placeholder="Nova categoria">
-                    <button type="submit">+</button>
-                </form>
-            </div>
+                <fieldset class="sidebar__filtro">
+                    <legend>Situação</legend>
+                    <button class="filtro-situacao filtro-situacao--ativo" data-filtro="todas">Todas</button>
+                    <button class="filtro-situacao" data-filtro="pendente">Pendentes</button>
+                    <button class="filtro-situacao" data-filtro="concluida">Concluídas</button>
+                </fieldset>
 
-            <button type="button" id="btn-excluir-concluidas" class="botao--fantasma">Excluir concluídas</button>
-    </aside>
+                <div class="sidebar__ordenacao">
+                    <label for="select-ordenacao">Ordenar por</label>
+                    <select id="select-ordenacao">
+                        <option value="criacao">Mais recentes</option>
+                        <option value="prioridade">Prioridade</option>
+                        <option value="prazo">Prazo</option>
+                    </select>
+                </div>
+
+                <div class="sidebar__categorias">
+                    <h3>Categorias</h3>
+                    <ul id="lista-categorias"></ul>
+                    <form id="form-categoria">
+                        <input type="text" id="nova-categoria" placeholder="Nova categoria">
+                        <button type="submit">+</button>
+                    </form>
+                </div>
+
+                <button type="button" id="btn-excluir-concluidas" class="botao--fantasma">Excluir concluídas</button>
+
+                <div class="sidebar__usuario">
+                    <span id="usuario-email"></span>
+                    <button type="button" id="btn-sair">Sair</button>
+                </div>
+        </aside>
 
         <main class="conteudo">
             <h1>Gerenciador de Tarefas</h1>
@@ -61,6 +93,7 @@
             <p id="estado-vazio">Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!</p>
 
         </main>
+    </div>        
 
     <div id="modal-tarefa" class="modal" hidden>
         <div class="modal__conteudo">
