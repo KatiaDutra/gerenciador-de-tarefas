@@ -364,3 +364,99 @@ h1 {
   border: 1px solid #E5E7EB;
   border-radius: 6px;
 }
+
+/*RESPONSIVIDADE*/
+
+/* Para todos os tamanhos */
+.indicadores {
+  flex-wrap: wrap;
+}
+
+#form-categoria input {
+  min-width: 0;
+}
+
+/* Para Tablets e telas médias */
+@media (max-width: 1024px) {
+  .conteudo {
+    padding: 24px;
+  }
+}
+
+/* Para Celulares e tablets em pé */
+@media (max-width: 768px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .sidebar__logo {
+    width: 110px;
+  }
+
+  .sidebar__filtro {
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .filtro-situacao {
+    flex: 1;
+  }
+
+  #lista-categorias {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  #lista-categorias li {
+    flex-shrink: 0;
+    white-space: nowrap;
+    border: 1px solid #E5E7EB;
+  }
+
+  .botao--fantasma {
+    margin-top: 0;
+  }
+
+  .conteudo {
+    padding: 20px 16px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .indicadores {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .indicador {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .indicador:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .grid-tarefas {
+    margin-top: 16px;
+  }
+
+  .modal__conteudo {
+    width: calc(100% - 32px);
+    padding: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
