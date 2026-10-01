@@ -1,0 +1,129 @@
+.abas {
+  display: flex;
+  gap: 4px;
+  margin-top: 20px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.aba {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 10px 16px;
+  margin-bottom: -1px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cor-texto-suave);
+  cursor: pointer;
+}
+
+.aba:hover {
+  color: var(--cor-texto);
+}
+
+.aba--ativa {
+  color: var(--cor-editar);
+  border-bottom-color: var(--cor-editar);
+}
+
+#painel-estatisticas {
+  margin-top: 24px;
+}
+
+#estatisticas-conteudo[hidden] {
+  display: none;
+}
+
+.estatisticas__vazio {
+  color: var(--cor-texto-suave);
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.kpi {
+  background: var(--cor-card);
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.kpi__valor {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--cor-editar);
+}
+
+.kpi__rotulo {
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+}
+
+.graficos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.grafico {
+  background: var(--cor-card);
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.grafico--largo {
+  grid-column: 1 / -1;
+}
+
+.grafico figcaption {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.grafico__area {
+  position: relative;
+  height: 260px;
+}
+
+.estatisticas__nota {
+  margin-top: 16px;
+  font-size: 0.8rem;
+  color: var(--cor-texto-suave);
+}
+
+@media (max-width: 768px) {
+  .graficos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .kpi {
+    padding: 14px;
+  }
+
+  .kpi__valor {
+    font-size: 1.4rem;
+  }
+
+  .grafico {
+    padding: 14px;
+  }
+
+  .grafico__area {
+    height: 220px;
+  }
+}

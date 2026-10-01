@@ -8,6 +8,8 @@
     <link rel="icon" href="FocoCerto.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" defer></script>
     <script type="module" src="js/script.js"></script>
     <script type="module" src="js/auth.js"></script>    
 </head>
@@ -82,15 +84,72 @@
 
         <main class="conteudo">
             <h1>Gerenciador de Tarefas</h1>
-            <section class="indicadores">
-                <div class="indicador">Total: <span id="total-tarefas">0</span></div>
-                <div class="indicador">Pendentes: <span id="pendentes-tarefas">0</span></div>
-                <div class="indicador">Concluídas: <span id="concluidas-tarefas">0</span></div>
-                <div class="indicador indicador--atraso">Atrasadas: <span id="atrasadas-tarefas">0</span></div>
-                <div class="indicador">Tarefas Concluídas: <span id="percentual-tarefas">0%</span></div>
+            <nav class="abas">
+                <button type="button" class="aba aba--ativa" data-aba="tarefas">Tarefas</button>
+                <button type="button" class="aba" data-aba="estatisticas">Estatísticas</button>
+            </nav>
+
+            <div id="painel-tarefas">
+                <section class="indicadores">
+                    <div class="indicador">Total: <span id="total-tarefas">0</span></div>
+                    <div class="indicador">Pendentes: <span id="pendentes-tarefas">0</span></div>
+                    <div class="indicador">Concluídas: <span id="concluidas-tarefas">0</span></div>
+                    <div class="indicador indicador--atraso">Atrasadas: <span id="atrasadas-tarefas">0</span></div>
+                    <div class="indicador">Tarefas Concluídas: <span id="percentual-tarefas">0%</span></div>
+                </section>
+                <section id="lista-tarefas" class="grid-tarefas"></section>
+                <p id="estado-vazio">Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!</p>
+            </div>
+
+            <section id="painel-estatisticas" hidden>
+                <p id="estatisticas-vazio" class="estatisticas__vazio" hidden>Cadastre algumas tarefas para ver suas estatísticas aqui.</p>
+
+                <div id="estatisticas-conteudo">
+                    <div class="kpis">
+                        <div class="kpi">
+                            <span class="kpi__valor" id="kpi-taxa">0%</span>
+                            <span class="kpi__rotulo">Taxa de conclusão</span>
+                        </div>
+                        <div class="kpi">
+                            <span class="kpi__valor" id="kpi-semana">0</span>
+                            <span class="kpi__rotulo">Concluídas nos últimos 7 dias</span>
+                        </div>
+                        <div class="kpi">
+                            <span class="kpi__valor" id="kpi-tempo">—</span>
+                            <span class="kpi__rotulo">Tempo médio para concluir</span>
+                        </div>
+                        <div class="kpi">
+                            <span class="kpi__valor" id="kpi-prazo">—</span>
+                            <span class="kpi__rotulo">Concluídas dentro do prazo</span>
+                        </div>
+                    </div>
+
+                    <div class="graficos">
+                        <figure class="grafico grafico--largo">
+                            <figcaption>Criadas x concluídas por semana</figcaption>
+                            <div class="grafico__area"><canvas id="grafico-semanas"></canvas></div>
+                        </figure>
+                        <figure class="grafico">
+                            <figcaption>Situação atual</figcaption>
+                            <div class="grafico__area"><canvas id="grafico-situacao"></canvas></div>
+                        </figure>
+                        <figure class="grafico">
+                            <figcaption>Pendentes por prioridade</figcaption>
+                            <div class="grafico__area"><canvas id="grafico-prioridades"></canvas></div>
+                        </figure>
+                        <figure class="grafico">
+                            <figcaption>Categorias com mais tarefas</figcaption>
+                            <div class="grafico__area"><canvas id="grafico-categorias"></canvas></div>
+                        </figure>
+                        <figure class="grafico">
+                            <figcaption>Proporção por categoria</figcaption>
+                            <div class="grafico__area"><canvas id="grafico-proporcao"></canvas></div>
+                        </figure>
+                    </div>
+
+                    <p class="estatisticas__nota">O tempo médio, as concluídas por semana e o percentual dentro do prazo consideram as tarefas concluídas a partir desta atualização.</p>
+                </div>
             </section>
-            <section id="lista-tarefas" class="grid-tarefas"></section>
-            <p id="estado-vazio">Nenhuma tarefa cadastrada. Adicione uma tarefa para começar!</p>
 
         </main>
     </div>        

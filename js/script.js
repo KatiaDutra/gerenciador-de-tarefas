@@ -1,6 +1,7 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+import { atualizarDashboard, dataLocal } from "./dashboard.js";
 
 const modal = document.getElementById("modal-tarefa");
 const btnNovaTarefa = document.getElementById("btn-nova-tarefa");
@@ -34,6 +35,11 @@ let tarefas = [];
 let categorias = [];
 let filtroSituacaoAtual = "todas";
 let filtroCategoriaAtual = null;
+let abaAtual = "tarefas";
+
+const botoesAba = document.querySelectorAll(".aba");
+const painelTarefas = document.getElementById("painel-tarefas");
+const painelEstatisticas = document.getElementById("painel-estatisticas");
 
 const CATEGORIAS_PADRAO = ["Trabalho", "Estudos", "Pessoal", "Saúde", "Casa"];
 let usuarioId = null;
@@ -68,7 +74,19 @@ async function carregarDados() {
   }
 }
 
+function mostrarAba(aba) {
+  abaAtual = aba;
+  botoesAba.forEach((b) => b.classList.toggle("aba--ativa", b.dataset.aba === aba));
+  painelTarefas.hidden = aba !== "tarefas";
+  painelEstatisticas.hidden = aba !== "estatisticas";
+
+  if (aba === "estatisticas") {
+    atualizarDashboard(tarefas, categorias);
+  }
+}
+
 function limparTela() {
+  mostrarAba("tarefas");
   tarefas = [];
   categorias = [...CATEGORIAS_PADRAO];
   filtroCategoriaAtual = null;
@@ -88,8 +106,7 @@ function pesoPrioridade(prioridade) {
 
 function estaAtrasada(tarefa) {
   if (tarefa.situacao !== "pendente") return false;
-  const hoje = new Date().toISOString().split("T")[0];
-  return tarefa.prazo < hoje;
+  return tarefa.prazo < dataLocal();
 }
 
 function formatarData(dataISO) {
@@ -188,6 +205,10 @@ function atualizarIndicadores() {
   concluidasTarefasEl.textContent = concluidas;
   document.getElementById("percentual-tarefas").textContent = percentual + "%";
   document.getElementById("atrasadas-tarefas").textContent = atrasadas;
+
+  if (abaAtual === "estatisticas") {
+    atualizarDashboard(tarefas, categorias);
+  }
 }
 
 function adicionarTarefa() {
@@ -228,7 +249,13 @@ function excluirTarefa(id) {
 
 function alternarConclusao(id) {
   const tarefa = tarefas.find((tarefa) => tarefa.id === id);
-  tarefa.situacao = tarefa.situacao === "concluida" ? "pendente" : "concluida";
+  if (tarefa.situacao === "concluida") {
+    tarefa.situacao = "pendente";
+    delete tarefa.concluidaEm;
+  } else {
+    tarefa.situacao = "concluida";
+    tarefa.concluidaEm = dataLocal();
+  }
 
   salvarTarefas();
   exibirTarefas();
@@ -338,6 +365,7 @@ btnExcluirConcluidas.addEventListener("click", () => {
 botoesFiltroSituacao.forEach((botao) => {
   botao.addEventListener("click", () => {
     filtroSituacaoAtual = botao.dataset.filtro;
+    mostrarAba("tarefas");
     botoesFiltroSituacao.forEach((b) => b.classList.remove("filtro-situacao--ativo"));
     botao.classList.add("filtro-situacao--ativo");
     exibirTarefas();
@@ -357,6 +385,7 @@ listaCategorias.addEventListener("click", (evento) => {
   }
 
   destacarCategoriaAtiva();
+  mostrarAba("tarefas");
   exibirTarefas();
 });
 
@@ -379,7 +408,12 @@ formCategoria.addEventListener("submit", (evento) => {
 
 selectOrdenacao.addEventListener("change", () => {
   ordenacaoAtual = selectOrdenacao.value;
+  mostrarAba("tarefas");
   exibirTarefas();
+});
+
+botoesAba.forEach((botao) => {
+  botao.addEventListener("click", () => mostrarAba(botao.dataset.aba));
 });
 
 onAuthStateChanged(auth, async (usuario) => {
