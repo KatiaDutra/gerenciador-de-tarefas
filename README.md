@@ -1,90 +1,65 @@
 <p align="center">
-  <img src="FocoCerto.png" alt="FocoCerto" width="180">
+  <img src="FocoCerto.png" alt="FocoCerto" width="160">
 </p>
 
-<h1 align="center">FocoCerto</h1>
+# FocoCerto
 
-<p align="center">
-  Gerenciador de tarefas para planejar, organizar e acompanhar as atividades do dia a dia.<br>
-  <a href="https://katiadutra.github.io/gerenciador-de-tarefas/"><strong>Acessar o app »</strong></a>
-</p>
+Gerenciador de tarefas com login e uma aba de estatísticas sobre as próprias tarefas.
 
----
+🔗 **Acesse:** https://katiadutra.github.io/gerenciador-de-tarefas/
 
 ## Sobre o projeto
 
-O FocoCerto é uma aplicação web desenvolvida como exercício do curso de Desenvolvimento Front-end (Programa Bolsa Futuro Digital). Começou como um gerenciador de tarefas com dados salvos no navegador e evoluiu para um app com contas de usuário: cada pessoa cria seu cadastro, e as tarefas ficam guardadas na nuvem, acessíveis de qualquer computador ou celular.
+Comecei este projeto como exercício do curso de Desenvolvimento Front-end do Programa Bolsa Futuro Digital. A primeira versão era simples: cadastrar, concluir e excluir tarefas, com os dados salvos no localStorage do navegador.
 
-## Funcionalidades
+Depois de terminar o exercício, decidi continuar evoluindo o projeto para praticar coisas novas. Adicionei login, passei a salvar os dados no Firebase e, como meu interesse é a área de dados, criei uma aba de estatísticas que analisa as tarefas de cada usuário e mostra os resultados em gráficos.
 
-**Contas de usuário**
-- Cadastro e login com e-mail e senha
-- Recuperação de senha por e-mail
-- Tarefas e categorias separadas por usuário, sincronizadas entre dispositivos
+## O que o app faz
 
-**Tarefas**
-- Cadastro de tarefas com descrição, categoria, prioridade e prazo, com validação dos campos
-- Edição de tarefas
-- Marcar e desmarcar como concluída
-- Exclusão individual, com confirmação, e exclusão de todas as concluídas de uma vez
-- Destaque visual para tarefas atrasadas
-
-**Organização**
-- Filtro por situação (todas, pendentes ou concluídas)
-- Filtro por categoria, com opção de ver todas
-- Ordenação por data de criação, prioridade ou prazo
-- Cadastro de novas categorias
-
-**Painel**
-- Indicadores de total, pendentes, concluídas, atrasadas e percentual concluído
-- Layout responsivo, adaptado para computador, tablet e celular
+- Cadastro e login com e-mail e senha, com opção de recuperar a senha
+- Cada usuário vê apenas as próprias tarefas, que ficam salvas na nuvem
+- Cadastrar, editar, concluir e excluir tarefas
+- Filtrar por situação e por categoria, e ordenar por prioridade ou prazo
+- Destaque para tarefas atrasadas
+- Aba de estatísticas com:
+  - taxa de conclusão, tarefas concluídas na última semana, tempo médio para concluir e percentual concluído no prazo
+  - gráfico de tarefas criadas x concluídas por semana
+  - gráficos por situação, por prioridade e por categoria
+- Layout que funciona no computador e no celular
 
 ## Tecnologias
 
-- HTML5
-- CSS3 (Flexbox, Grid e media queries)
-- JavaScript puro, com módulos ES
-- [Firebase Authentication](https://firebase.google.com/docs/auth) para login e cadastro
-- [Cloud Firestore](https://firebase.google.com/docs/firestore) como banco de dados
-- GitHub Pages para hospedagem
+- HTML, CSS e JavaScript
+- Firebase Authentication (login)
+- Cloud Firestore (banco de dados)
+- Chart.js (gráficos)
+- GitHub Pages (publicação)
 
-## Estrutura do projeto
+## Desafios e aprendizados
 
-```
-gerenciador-de-tarefas/
-├── index.html
-├── FocoCerto.png
-├── css/
-│   ├── style.css      # estilos do app e responsividade
-│   └── login.css      # estilos da tela de login
-└── js/
-    ├── firebase.js    # configuração e conexão com o Firebase
-    ├── auth.js        # login, cadastro, recuperação de senha e saída
-    └── script.js      # tarefas, categorias, filtros e indicadores
-```
+**Sair do localStorage.** No começo, todas as tarefas ficavam salvas no navegador. Isso funcionava, mas se eu limpasse o histórico perdia tudo, e no celular as tarefas não apareciam. Ao migrar para o Firestore, aprendi a organizar os dados por usuário e a escrever regras de segurança para que cada pessoa só acesse o que é dela.
 
-## Segurança dos dados
+**Configurar o Firebase.** Na primeira tentativa de criar uma conta, só aparecia uma mensagem de erro genérica. Descobri que o serviço de autenticação ainda não estava ativado no projeto. Depois disso, passei a mostrar o código do erro na tela para facilitar a investigação.
 
-Cada usuário tem um documento próprio no Firestore, identificado pelo código único da sua conta. As regras de segurança do banco permitem que apenas o dono da conta, autenticado, leia ou altere os próprios dados:
+**Cache do navegador.** Mais de uma vez eu atualizei os arquivos e a página continuava igual. Aprendi a usar o Ctrl + F5, o Console do navegador para encontrar erros e a testar em aba anônima.
 
-```
-match /usuarios/{userId} {
-  allow read, write: if request.auth != null && request.auth.uid == userId;
-}
-```
+**Registrar as datas certas.** Para calcular o tempo médio de conclusão, precisei começar a guardar a data em que cada tarefa é concluída. Também percebi que o cálculo de "hoje" usava o horário UTC, o que fazia tarefas aparecerem como atrasadas antes da hora depois das 21h, e corrigi para usar o horário local.
 
-## Como executar localmente
+**Responsividade.** No celular, a barra lateral ficava enorme e empurrava as tarefas para baixo. Reorganizei o layout para que as ações menos usadas fiquem no rodapé.
 
-1. Clone o repositório:
-   ```
-   git clone https://github.com/KatiaDutra/gerenciador-de-tarefas.git
-   ```
-2. Abra a pasta no VS Code e inicie o projeto com a extensão **Live Server** (botão direito no `index.html` → *Open with Live Server*).
+## Como rodar no seu computador
 
-Os scripts usam módulos JavaScript, que não funcionam ao abrir o `index.html` direto pelo explorador de arquivos. Por isso é necessário um servidor local, como o Live Server.
+1. Clone o repositório
+2. Abra a pasta no VS Code
+3. Clique com o botão direito no `index.html` e escolha **Open with Live Server**
 
-Para usar um projeto Firebase próprio, substitua os dados de `firebaseConfig` em `js/firebase.js`, ative o login por e-mail/senha no Authentication, crie um banco no Firestore e publique as regras de segurança acima.
+Os arquivos JavaScript usam módulos, então não funcionam abrindo o `index.html` direto pela pasta. É preciso usar um servidor local, como o Live Server.
+
+## Próximos passos
+
+- Adicionar filtros de período na aba de estatísticas
+- Permitir editar e excluir categorias
 
 ## Autora
 
-Desenvolvido por **Katia Dutra**.
+Katia Dutra
