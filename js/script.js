@@ -176,7 +176,7 @@ function exibirTarefas() {
     card.innerHTML = `
       <h3 class="tarefa__descricao">${tarefa.descricao}</h3>
       <p class="tarefa__categoria">${tarefa.categoria}</p>
-      <p class="tarefa__prioridade">Prioridade: ${tarefa.prioridade}</p>
+      <p class="tarefa__prioridade">Prioridade: ${{ alta: "Alta", media: "Média", baixa: "Baixa" }[tarefa.prioridade]}</p>
       <p class="tarefa__prazo">Prazo: ${formatarData(tarefa.prazo)}</p>
       <div class="tarefa__acoes">
         <button class="botao--editar" data-id="${tarefa.id}">Editar</button>
